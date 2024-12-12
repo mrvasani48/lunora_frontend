@@ -3,7 +3,7 @@ export default async function Page() {
  
   return (
     <ul>
-     hii
+       welcome to my page
     </ul>
   )
 }
