@@ -15,7 +15,7 @@ const ChatApp = () => {
 
   // Connect to the server
   useEffect(() => {
-    socket = io('http://localhost:5001', {
+    socket = io('https://lunora-backend.vercel.app/', {
       transports: ['websocket'],
     });
 
