@@ -1,7 +1,7 @@
 import React from 'react';
 // import { SocketProvider } from './SocketContext';
 
-const Layout = ({ children }) => {
+const Layout = ({ children }:any) => {
   console.log('layout worked');
   return (
     // <SocketProvider>
