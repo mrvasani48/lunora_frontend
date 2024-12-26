@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
-let socket;
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 const ChatApp = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [sender, setSender] = useState('user1'); // Static sender (user1)
   const [receiver, setReceiver] = useState('user2'); // Receiver from the input
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any>([]);
 
   // Connect to the server
   useEffect(() => {
@@ -37,7 +39,7 @@ const ChatApp = () => {
     // Listen for incoming messages from other users
     socket.on('message', data => {
       const { sender, content } = data;
-      setMessages(prevMessages => [
+      setMessages((prevMessages:any) => [
         ...prevMessages,
         { sender, content, type: sender === sender ? 'sent' : 'received' },
       ]);
@@ -46,7 +48,7 @@ const ChatApp = () => {
     // Listen for all messages between sender and receiver
     socket.on('allMessages', messages => {
       setMessages(
-        messages.map(msg => ({
+        messages.map((msg: { sender_user_name: string; receiver_user_name: any; content: any; }) => ({
           sender: msg.sender_user_name, // Use sender_user_name
           receiver: msg.receiver_user_name, // Use receiver_user_name
           content: msg.content,
@@ -159,7 +161,7 @@ const ChatApp = () => {
             flexDirection: 'column',
           }}
         >
-          {messages.map((msg, index) => (
+          {messages.map((msg:any, index:number) => (
             <div
               key={index}
               style={{
